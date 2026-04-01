@@ -1,4 +1,4 @@
-name: Build Recordly App
+name: Build Recordify App
 
 on:
   push:
@@ -9,39 +9,46 @@ jobs:
   build:
     runs-on: windows-latest
 
-    env:
-      CI: true
-
     steps:
-      - name: 📥 Checkout Repository
+      - name: 📥 Checkout
         uses: actions/checkout@v4
 
-      - name: 🟢 Setup Node.js
+      # ✅ Use Node 20 (matches your project)
+      - name: 🟢 Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
 
-      - name: 📦 Install Dependencies
-        run: npm install
+      # ✅ Fix Python issue (distutils)
+      - name: 🐍 Fix Python for node-gyp
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install setuptools
 
-      # Fix for native modules like uiohook
-      - name: 🔧 Rebuild Native Modules
+      # ❗ CRITICAL: Skip postinstall
+      - name: 📦 Install Dependencies (SAFE)
+        run: npm install --legacy-peer-deps --ignore-scripts
+
+      # ✅ Install correct rebuild tool temporarily
+      - name: 🔧 Install compatible rebuild
+        run: npm install @electron/rebuild@3.6.0 --no-save
+
+      # ✅ Rebuild native module manually
+      - name: 🔨 Rebuild Native Modules
         run: npx electron-rebuild -f -w uiohook-napi
 
-      # If your project uses TypeScript / Vite / build step
-      - name: 🏗️ Build Project
+      # ✅ Build (ignore native helper failures if any)
+      - name: 🏗️ Build App
         run: npm run build
         continue-on-error: true
 
-      - name: 📦 Package Electron App
+      # ✅ Package
+      - name: 📦 Package App
         run: npx electron-builder --win
 
-      - name: 📤 Upload Build Artifact
+      # ✅ Upload
+      - name: 📤 Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: recordly-build
-          path: |
-            dist/**/*.exe
-            dist/**/*.msi
-            dist/**/*.zip
+          name: recordify-build
+          path: dist/**
