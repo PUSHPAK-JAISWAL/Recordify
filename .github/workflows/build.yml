@@ -1,0 +1,47 @@
+name: Build Recordly App
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    env:
+      CI: true
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: 📦 Install Dependencies
+        run: npm install
+
+      # Fix for native modules like uiohook
+      - name: 🔧 Rebuild Native Modules
+        run: npx electron-rebuild -f -w uiohook-napi
+
+      # If your project uses TypeScript / Vite / build step
+      - name: 🏗️ Build Project
+        run: npm run build
+        continue-on-error: true
+
+      - name: 📦 Package Electron App
+        run: npx electron-builder --win
+
+      - name: 📤 Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: recordly-build
+          path: |
+            dist/**/*.exe
+            dist/**/*.msi
+            dist/**/*.zip
