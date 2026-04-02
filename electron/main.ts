@@ -112,7 +112,7 @@ let recordingTrayIcon: ReturnType<typeof getTrayIcon> | null = null;
 
 function getDefaultTrayIcon() {
 	if (!defaultTrayIcon) {
-		defaultTrayIcon = getTrayIcon("app-icons/recordly-32.png");
+		defaultTrayIcon = getTrayIcon("app-icons/Recordify-32.png");
 	}
 	return defaultTrayIcon;
 }
@@ -352,7 +352,7 @@ function syncDockIcon() {
 		return;
 	}
 
-	const dockIcon = getAppImage("app-icons/recordly-512.png");
+	const dockIcon = getAppImage("app-icons/Recordify-512.png");
 	if (!dockIcon.isEmpty()) {
 		app.dock.setIcon(dockIcon);
 	}
@@ -361,13 +361,13 @@ function syncDockIcon() {
 function getUpdateNotificationTitle(payload: UpdateToastPayload) {
 	switch (payload.phase) {
 		case "available":
-			return `Recordly ${payload.version} is available`;
+			return `Recordify ${payload.version} is available`;
 		case "downloading":
-			return `Downloading Recordly ${payload.version}`;
+			return `Downloading Recordify ${payload.version}`;
 		case "ready":
-			return `Recordly ${payload.version} is ready`;
+			return `Recordify ${payload.version} is ready`;
 		case "error":
-			return `Recordly ${payload.version} needs attention`;
+			return `Recordify ${payload.version} needs attention`;
 	}
 }
 
@@ -376,7 +376,7 @@ function getUpdateNotificationBody(payload: UpdateToastPayload) {
 		case "available":
 			return "Click to download the update.";
 		case "downloading":
-			return "Recordly is downloading the update in the foreground.";
+			return "Recordify is downloading the update in the foreground.";
 		case "ready":
 			return "Click to install the downloaded update.";
 		case "error":
@@ -417,7 +417,7 @@ function sendUpdateToastToWindows(channel: "update-toast-state", payload: unknow
 		const notification = new Notification({
 			title: getUpdateNotificationTitle(updatePayload),
 			body: getUpdateNotificationBody(updatePayload),
-			icon: getAppImage("app-icons/recordly-128.png"),
+			icon: getAppImage("app-icons/Recordify-128.png"),
 			silent: false,
 		});
 
@@ -535,7 +535,7 @@ ipcMain.handle("check-for-app-updates", async () => {
 function updateTrayMenu(recording: boolean = false) {
 	if (!tray) return;
 	const trayIcon = recording ? getRecordingTrayIcon() : getDefaultTrayIcon();
-	const trayToolTip = recording ? `Recording: ${selectedSourceName}` : "Recordly";
+	const trayToolTip = recording ? `Recording: ${selectedSourceName}` : "Recordify";
 	const menuTemplate = recording
 		? [
 				{
@@ -653,7 +653,7 @@ app.on("second-instance", () => {
 // Register all IPC handlers when app is ready
 app.whenReady().then(async () => {
 	if (process.platform === "win32") {
-		app.setAppUserModelId("dev.recordly.app");
+		app.setAppUserModelId("dev.Recordify.app");
 	}
 
 	session.defaultSession.setPermissionCheckHandler((_webContents, permission) => {

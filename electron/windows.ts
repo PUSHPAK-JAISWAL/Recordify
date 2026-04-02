@@ -14,7 +14,7 @@ const RENDERER_DIST = path.join(APP_ROOT, "dist");
 const WINDOW_ICON_PATH = path.join(
 	process.env.VITE_PUBLIC || RENDERER_DIST,
 	"app-icons",
-	"recordly-512.png",
+	"Recordify-512.png",
 );
 
 let hudOverlayWindow: BrowserWindow | null = null;
@@ -492,7 +492,7 @@ export function createEditorWindow(): BrowserWindow {
 		resizable: true,
 		alwaysOnTop: false,
 		skipTaskbar: false,
-		title: "Recordly",
+		title: "Recordify",
 		show: false,
 		backgroundColor: "#000000",
 		webPreferences: {

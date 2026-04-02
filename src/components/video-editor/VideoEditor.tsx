@@ -925,7 +925,7 @@ export default function VideoEditor() {
 	const projectDisplayName = useMemo(() => {
 		const fileName =
 			currentProjectPath?.split(/[\\/]/).pop() ?? currentSourcePath?.split(/[\\/]/).pop() ?? "";
-		const withoutExtension = fileName.replace(/\.recordly$/i, "").replace(/\.[^.]+$/, "");
+		const withoutExtension = fileName.replace(/\.Recordify$/i, "").replace(/\.[^.]+$/, "");
 		return withoutExtension || t("editor.project.untitled", "Untitled");
 	}, [currentProjectPath, currentSourcePath, t]);
 
@@ -3337,7 +3337,7 @@ export default function VideoEditor() {
 					<span className="text-sm font-semibold tracking-tight text-white/90">
 						{projectDisplayName}
 					</span>
-					<span className="text-xs font-medium tracking-tight text-slate-500">.recordly</span>
+					<span className="text-xs font-medium tracking-tight text-slate-500">.Recordify</span>
 				</div>
 				<div
 					className="flex items-center gap-2 justify-self-end pr-3"

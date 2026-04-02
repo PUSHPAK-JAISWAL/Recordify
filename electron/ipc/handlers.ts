@@ -17,7 +17,7 @@ import { resolveWindowsCaptureDisplay } from './windowsCaptureSelection'
 const execFileAsync = promisify(execFile)
 const nodeRequire = createRequire(import.meta.url)
 
-const PROJECT_FILE_EXTENSION = 'recordly'
+const PROJECT_FILE_EXTENSION = 'Recordify'
 const LEGACY_PROJECT_FILE_EXTENSIONS = ['openscreen']
 const PROJECTS_DIRECTORY_NAME = 'Projects'
 const PROJECT_THUMBNAIL_SUFFIX = '.preview.png'
@@ -29,8 +29,8 @@ const COUNTDOWN_SETTINGS_FILE = path.join(USER_DATA_PATH, 'countdown-settings.js
 const AUTO_RECORDING_PREFIX = 'recording-'
 const AUTO_RECORDING_RETENTION_COUNT = 20
 const AUTO_RECORDING_MAX_AGE_MS = 14 * 24 * 60 * 60 * 1000
-const ALLOW_RECORDLY_WINDOW_CAPTURE = Boolean(process.env['VITE_DEV_SERVER_URL'])
-const RECORDING_SESSION_MANIFEST_SUFFIX = '.recordly-session.json'
+const ALLOW_Recordify_WINDOW_CAPTURE = Boolean(process.env['VITE_DEV_SERVER_URL'])
+const RECORDING_SESSION_MANIFEST_SUFFIX = '.Recordify-session.json'
 const WHISPER_MODEL_DOWNLOAD_URL = 'https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-small.bin'
 const WHISPER_MODEL_DIR = path.join(USER_DATA_PATH, 'whisper')
 const WHISPER_SMALL_MODEL_PATH = path.join(WHISPER_MODEL_DIR, 'ggml-small.bin')
@@ -515,7 +515,7 @@ async function buildProjectLibraryEntry(projectPath: string, projectsDir: string
 
     return {
       path: normalizedPath,
-      name: path.basename(normalizedPath).replace(/\.(recordly|openscreen)$/i, ''),
+      name: path.basename(normalizedPath).replace(/\.(Recordify|openscreen)$/i, ''),
       updatedAt: stats.mtimeMs,
       thumbnailPath: thumbnailExists ? thumbnailPath : null,
       isCurrent: Boolean(currentProjectPath && normalizePath(currentProjectPath) === normalizedPath),
@@ -1585,7 +1585,7 @@ async function resolveWhisperExecutablePath(preferredPath?: string | null) {
     }
   }
 
-  throw new Error('No Whisper runtime was found. Recordly looked for a bundled binary first, then checked common system install locations.')
+  throw new Error('No Whisper runtime was found. Recordify looked for a bundled binary first, then checked common system install locations.')
 }
 
 async function resolveCaptionAudioCandidates(videoPath: string) {
@@ -1667,7 +1667,7 @@ async function generateAutoCaptionsFromVideo(options: {
   await ensureReadableFile(whisperExecutablePath, 'whisper executable')
   await ensureReadableFile(whisperModelPath, 'whisper model')
 
-  const tempBase = path.join(app.getPath('temp'), `recordly-captions-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`)
+  const tempBase = path.join(app.getPath('temp'), `Recordify-captions-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`)
   const wavPath = `${tempBase}.wav`
   const outputBase = `${tempBase}-whisper`
   const srtPath = `${outputBase}.srt`
@@ -1866,7 +1866,7 @@ async function resolveWindowsWindowBounds(source: SelectedSource): Promise<Windo
     'Add-Type -TypeDefinition @"',
     'using System;',
     'using System.Runtime.InteropServices;',
-    'public static class RecordlyWindowBounds {',
+    'public static class RecordifyWindowBounds {',
     '  [StructLayout(LayoutKind.Sequential)]',
     '  public struct RECT {',
     '    public int Left;',
@@ -1892,8 +1892,8 @@ async function resolveWindowsWindowBounds(source: SelectedSource): Promise<Windo
     'if ($handle -le 0) {',
     '  exit 1',
     '}',
-    '$rect = New-Object RecordlyWindowBounds+RECT',
-    'if (-not [RecordlyWindowBounds]::GetWindowRect([IntPtr]$handle, [ref]$rect)) {',
+    '$rect = New-Object RecordifyWindowBounds+RECT',
+    'if (-not [RecordifyWindowBounds]::GetWindowRect([IntPtr]$handle, [ref]$rect)) {',
     '  exit 1',
     '}',
     '@{ x = $rect.Left; y = $rect.Top; width = $rect.Right - $rect.Left; height = $rect.Bottom - $rect.Top } | ConvertTo-Json -Compress',
@@ -3277,7 +3277,7 @@ export function registerIpcHandlers(
     const ownWindowNames = new Set(
       [
         app.getName(),
-        'Recordly',
+        'Recordify',
         ...BrowserWindow.getAllWindows().flatMap((win) => {
           const title = win.getTitle().trim()
           return title ? [title] : []
@@ -3330,7 +3330,7 @@ export function registerIpcHandlers(
             return true
           }
 
-          if (ALLOW_RECORDLY_WINDOW_CAPTURE && normalizedName.includes('recordly')) {
+          if (ALLOW_Recordify_WINDOW_CAPTURE && normalizedName.includes('Recordify')) {
             return true
           }
 
@@ -3369,11 +3369,11 @@ export function registerIpcHandlers(
           const normalizedWindowName = normalizeDesktopSourceName(source.windowTitle ?? source.name)
           const normalizedAppName = normalizeDesktopSourceName(source.appName ?? '')
 
-          if (!ALLOW_RECORDLY_WINDOW_CAPTURE && normalizedAppName && normalizedAppName === ownAppName) {
+          if (!ALLOW_Recordify_WINDOW_CAPTURE && normalizedAppName && normalizedAppName === ownAppName) {
             return false
           }
 
-          if (ALLOW_RECORDLY_WINDOW_CAPTURE && (normalizedAppName === 'recordly' || normalizedWindowName?.includes('recordly'))) {
+          if (ALLOW_Recordify_WINDOW_CAPTURE && (normalizedAppName === 'Recordify' || normalizedWindowName?.includes('Recordify'))) {
             return true
           }
 
@@ -3417,7 +3417,7 @@ export function registerIpcHandlers(
             return true
           }
 
-          if (ALLOW_RECORDLY_WINDOW_CAPTURE && normalizedName.includes('recordly')) {
+          if (ALLOW_Recordify_WINDOW_CAPTURE && normalizedName.includes('Recordify')) {
             return true
           }
 
@@ -3799,13 +3799,13 @@ body{background:transparent;overflow:hidden;width:100vw;height:100vh}
       const appName = normalizeDesktopSourceName(String(source?.appName ?? ''))
       const ownAppName = normalizeDesktopSourceName(app.getName())
       if (
-        !ALLOW_RECORDLY_WINDOW_CAPTURE
+        !ALLOW_Recordify_WINDOW_CAPTURE
         &&
         source?.id?.startsWith('window:')
         && appName
-        && (appName === ownAppName || appName === 'recordly')
+        && (appName === ownAppName || appName === 'Recordify')
       ) {
-        return { success: false, message: 'Cannot record Recordly windows. Please select another app window.' }
+        return { success: false, message: 'Cannot record Recordify windows. Please select another app window.' }
       }
 
       const helperPath = await ensureNativeCaptureHelperBinary()
@@ -3896,8 +3896,8 @@ body{background:transparent;overflow:hidden;width:100vw;height:100vh}
         const { response } = await dialog.showMessageBox({
           type: 'warning',
           title: 'Screen Recording Permission Required',
-          message: 'Recordly needs screen recording permission to capture your screen.',
-          detail: 'Please open System Settings > Privacy & Security > Screen Recording, make sure Recordly is toggled ON, then try recording again.',
+          message: 'Recordify needs screen recording permission to capture your screen.',
+          detail: 'Please open System Settings > Privacy & Security > Screen Recording, make sure Recordify is toggled ON, then try recording again.',
           buttons: ['Open System Settings', 'Cancel'],
           defaultId: 0,
           cancelId: 1,
@@ -3924,8 +3924,8 @@ body{background:transparent;overflow:hidden;width:100vw;height:100vh}
         const { response } = await dialog.showMessageBox({
           type: 'warning',
           title: 'Microphone Permission Required',
-          message: 'Recordly needs microphone permission to record audio.',
-          detail: 'Please open System Settings > Privacy & Security > Microphone, make sure Recordly is toggled ON, then try recording again.',
+          message: 'Recordify needs microphone permission to record audio.',
+          detail: 'Please open System Settings > Privacy & Security > Microphone, make sure Recordify is toggled ON, then try recording again.',
           buttons: ['Open System Settings', 'Cancel'],
           defaultId: 0,
           cancelId: 1,
@@ -5019,10 +5019,10 @@ body{background:transparent;overflow:hidden;width:100vw;height:100vh}
         : `${safeName}.${PROJECT_FILE_EXTENSION}`
 
       const result = await dialog.showSaveDialog({
-        title: 'Save Recordly Project',
+        title: 'Save Recordify Project',
         defaultPath: path.join(projectsDir, defaultName),
         filters: [
-          { name: 'Recordly Project', extensions: [PROJECT_FILE_EXTENSION] },
+          { name: 'Recordify Project', extensions: [PROJECT_FILE_EXTENSION] },
           { name: 'JSON', extensions: ['json'] }
         ],
         properties: ['createDirectory', 'showOverwriteConfirmation']
@@ -5060,10 +5060,10 @@ body{background:transparent;overflow:hidden;width:100vw;height:100vh}
     try {
       const projectsDir = await getProjectsDir()
       const result = await dialog.showOpenDialog({
-        title: 'Open Recordly Project',
+        title: 'Open Recordify Project',
         defaultPath: projectsDir,
         filters: [
-          { name: 'Recordly Project', extensions: [PROJECT_FILE_EXTENSION, ...LEGACY_PROJECT_FILE_EXTENSIONS] },
+          { name: 'Recordify Project', extensions: [PROJECT_FILE_EXTENSION, ...LEGACY_PROJECT_FILE_EXTENSIONS] },
           { name: 'JSON', extensions: ['json'] },
           { name: 'All Files', extensions: ['*'] }
         ],

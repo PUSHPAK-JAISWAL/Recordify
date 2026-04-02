@@ -15,9 +15,9 @@ import { formatBinding, SHORTCUT_ACTIONS, SHORTCUT_LABELS } from "@/lib/shortcut
 import { formatShortcut } from "@/utils/platformUtils";
 import { toast } from "sonner";
 
-const RECORDLY_ISSUES_URL = "https://github.com/webadderall/Recordly/issues";
-const RECORDLY_DISCORD_URL = "https://discord.gg/FcfNN4S9m";
-const RECORDLY_X_URL = "https://x.com/webadderall";
+const Recordify_ISSUES_URL = "https://github.com/webadderall/Recordify/issues";
+const Recordify_DISCORD_URL = "https://discord.gg/FcfNN4S9m";
+const Recordify_X_URL = "https://x.com/webadderall";
 const CONTACT_EMAIL = "youngchen3442@gmail.com";
 export const APP_HEADER_ACTION_BUTTON_CLASS = "h-7 px-2 text-xs text-slate-400 hover:bg-white/10 hover:text-slate-200 transition-all gap-1.5";
 export const APP_HEADER_ICON_BUTTON_CLASS = "h-7 w-7 p-0 text-slate-400 hover:bg-white/10 hover:text-slate-200 transition-all";
@@ -49,7 +49,7 @@ export function DiscordLinkButton() {
 			type="button"
 			variant="ghost"
 			size="sm"
-			onClick={() => void openExternalLink(RECORDLY_DISCORD_URL, t("feedback.openFailed", "Failed to open link."))}
+			onClick={() => void openExternalLink(Recordify_DISCORD_URL, t("feedback.openFailed", "Failed to open link."))}
 			className={APP_HEADER_ICON_BUTTON_CLASS}
 			title={t("common.app.discord", "Join Discord")}
 			aria-label={t("common.app.discord", "Join Discord")}
@@ -112,7 +112,7 @@ export function FeedbackDialog() {
 							<Button
 								type="button"
 								variant="outline"
-								onClick={() => void openExternalLink(RECORDLY_X_URL, t("feedback.openFailed", "Failed to open link."))}
+								onClick={() => void openExternalLink(Recordify_X_URL, t("feedback.openFailed", "Failed to open link."))}
 								className="border-white/10 bg-white/5 text-slate-200 hover:bg-white/10 hover:text-white"
 							>
 								<Twitter className="h-3.5 w-3.5" />
@@ -122,7 +122,7 @@ export function FeedbackDialog() {
 					<Button
 						type="button"
 						variant="outline"
-						onClick={() => void openExternalLink(RECORDLY_ISSUES_URL, t("feedback.openFailed", "Failed to open link."))}
+						onClick={() => void openExternalLink(Recordify_ISSUES_URL, t("feedback.openFailed", "Failed to open link."))}
 						className="h-10 w-full justify-between border-white/10 bg-white/5 px-4 text-slate-200 hover:bg-white/10 hover:text-white"
 					>
 						<span className="flex items-center gap-2 text-sm font-medium">

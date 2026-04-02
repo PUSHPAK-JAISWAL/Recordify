@@ -671,13 +671,13 @@ export function LaunchWindow() {
 	const updateButtonTitle = (() => {
 		switch (updateStatus.status) {
 			case "up-to-date":
-				return t("recording.update.upToDateTitle", "Recordly {{version}} is up to date.", {
+				return t("recording.update.upToDateTitle", "Recordify {{version}} is up to date.", {
 					version: updateStatus.currentVersion,
 				});
 			case "available":
 			case "ready":
 				return updateStatus.availableVersion
-					? t("recording.update.availableTitle", "Recordly {{version}} is available.", {
+					? t("recording.update.availableTitle", "Recordify {{version}} is available.", {
 						version: updateStatus.availableVersion,
 					})
 					: t("recording.update.availableGenericTitle");
