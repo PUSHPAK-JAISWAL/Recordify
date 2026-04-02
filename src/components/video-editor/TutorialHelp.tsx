@@ -15,9 +15,9 @@ import { formatBinding, SHORTCUT_ACTIONS, SHORTCUT_LABELS } from "@/lib/shortcut
 import { formatShortcut } from "@/utils/platformUtils";
 import { toast } from "sonner";
 
-const Recordify_ISSUES_URL = "https://github.com/webadderall/Recordify/issues";
+const Recordify_ISSUES_URL = "https://github.com/PUSHPAK-JAISWAL/Recordify/issues";
 const Recordify_DISCORD_URL = "https://discord.gg/FcfNN4S9m";
-const Recordify_X_URL = "https://x.com/webadderall";
+const Recordify_X_URL = "https://x.com/PUSHPAK-JAISWAL";
 const CONTACT_EMAIL = "youngchen3442@gmail.com";
 export const APP_HEADER_ACTION_BUTTON_CLASS = "h-7 px-2 text-xs text-slate-400 hover:bg-white/10 hover:text-slate-200 transition-all gap-1.5";
 export const APP_HEADER_ICON_BUTTON_CLASS = "h-7 w-7 p-0 text-slate-400 hover:bg-white/10 hover:text-slate-200 transition-all";
@@ -107,7 +107,7 @@ export function FeedbackDialog() {
 								<p className="text-[11px] uppercase tracking-[0.18em] text-slate-500">
 									{t("feedback.xLabel", "X")}
 								</p>
-								<p className="mt-1 text-sm font-medium text-slate-100">@webadderall</p>
+								<p className="mt-1 text-sm font-medium text-slate-100">@PUSHPAK-JAISWAL</p>
 							</div>
 							<Button
 								type="button"

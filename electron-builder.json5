@@ -36,7 +36,7 @@
   "publish": [
     {
       "provider": "github",
-      "owner": "webadderall",
+      "owner": "PUSHPAK-JAISWAL",
       "repo": "Recordify",
       "tagNamePrefix": "v",
       "publishAutoUpdate": true
